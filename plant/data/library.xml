@@ -1,0 +1,110 @@
+<xml xmlns="http://www.w3.org/1999/xhtml"><block type="factory_base" id="i~?8d0Sm,e9C!e!p6zp4" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="LEFT"></mutation>
+    <field name="NAME">get_water_level</field>
+    <field name="INLINE">EXT</field>
+    <field name="CONNECTIONS">LEFT</field>
+    <statement name="INPUTS">
+      <block type="input_dummy" id=".cN~(=s(:jC0p7bDZan,">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="7Tm89i9k5LzG0)T3%+9@">
+            <field name="TEXT">อ่านระดับความชื้น</field>
+          </block>
+        </statement>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="POoa7Vjw)4q{Im`F023X" deletable="false" movable="false">
+        <field name="TEXT">อ่านระดับความชื้นจากดิน</field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="c!hK_47hQpiOkU}z)Hs[" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="OUTPUTTYPE">
+      <shadow type="type_null" id="`/x6?6P-iBl*{L[J-$HY"></shadow>
+      <block type="type_number" id="7@eaDZz+(|+~+R|S0G!3"></block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="uf:%ixnQLyu4:0}NXC?7">
+        <mutation colour="#a55b6d"></mutation>
+        <field name="HUE">345</field>
+      </block>
+    </value>
+  </block><block type="factory_base" id="?WyAQ|m{S7@;K}8Nf,,#" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="BOTH"></mutation>
+    <field name="NAME">signal_water_on</field>
+    <field name="INLINE">AUTO</field>
+    <field name="CONNECTIONS">BOTH</field>
+    <statement name="INPUTS">
+      <block type="input_dummy" id="LpheUT#lBi?~4VHU+Es=">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="*-$Lx/eyAC2OyOV8$]^3">
+            <field name="TEXT">ส่งสัญญาณเปิดน้ำ</field>
+          </block>
+        </statement>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="5+`+?9CN~GIQ!j-WAkM(" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="fy)e!5K+^aaLf/k`zIV7" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="TOPTYPE">
+      <shadow type="type_null" id=".lGh)PaGV1u%{hW2-IwU"></shadow>
+    </value>
+    <value name="BOTTOMTYPE">
+      <shadow type="type_null" id="p)%aX6TwBi)ztG}yKc-["></shadow>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="yIo}v2-eq9]Uh({3BO9o">
+        <mutation colour="#5ba5a5"></mutation>
+        <field name="HUE">180</field>
+      </block>
+    </value>
+  </block><block type="factory_base" id="X/wo}NZc)V#I~v8ffT]=" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="BOTH"></mutation>
+    <field name="NAME">signal_water_off</field>
+    <field name="INLINE">AUTO</field>
+    <field name="CONNECTIONS">BOTH</field>
+    <statement name="INPUTS">
+      <block type="input_dummy" id="cf=Xko(HgESzjtBzp(MU">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="kQ}Nz9Dt*|V6_kU6k)3]">
+            <field name="TEXT">ส่งสัญญาณปิดน้ำ</field>
+          </block>
+        </statement>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="f]T{h#|*Fqv(zQ+wu[-y" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="lw!5|xw[@n?,E?$$jef," deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="TOPTYPE">
+      <shadow type="type_null" id="h,`z_c+Uo,i)[W.uETi*"></shadow>
+    </value>
+    <value name="BOTTOMTYPE">
+      <shadow type="type_null" id="JDT34tPgfQSE|AqqT,Dv"></shadow>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="?j9DoEzeYeT:`Nx~swR|">
+        <mutation colour="#5ba5a5"></mutation>
+        <field name="HUE">180</field>
+      </block>
+    </value>
+  </block></xml>

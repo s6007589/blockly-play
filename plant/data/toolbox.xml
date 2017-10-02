@@ -1,0 +1,29 @@
+<xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
+  <category name="เงื่อนไข">
+    <block type="controls_if">
+      <mutation else="1"></mutation>
+    </block>
+    <block type="controls_if"></block>
+    <block type="logic_compare">
+      <field name="OP">EQ</field>
+    </block>
+    <block type="math_number">
+      <field name="NUM">0</field>
+    </block>
+  </category>
+  <category name="อ่านและควบคุม">
+    <block type="variables_set">
+      <field name="VAR" id=";*}x{Gzx8H!,@OPcXJ+s" variabletype="">H</field>
+    </block>
+    <block type="variables_set">
+      <field name="VAR" id=";*}x{Gzx8H!,@OPcXJ+s" variabletype="">H</field>
+    </block>
+    <block type="variables_get">
+      <field name="VAR" id=";*}x{Gzx8H!,@OPcXJ+s" variabletype="">H</field>
+    </block>
+    <block type="get_water_level"></block>
+    <block type="signal_water_on"></block>
+    <block type="signal_water_off"></block>
+  </category>
+  <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
+</xml>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Blockly Demo: Zoo</title>
+  <script src="../js/blockly_compressed.js"></script>
+  <script src="../js/javascript_compressed.js"></script>
+  <script src="../js/blocks_compressed.js"></script>
+  <script src="js/custom_blocks.js"></script>
+  <script src="../js/th.js"></script>
+  <script src="../js/jquery/jquery-3.2.1.min.js"></script>
+  <style>
+   body {
+       background-color: #fff;
+       font-family: sans-serif;
+   }
+   h1 {
+       font-weight: normal;
+       font-size: 140%;
+   }
+  </style>
+</head>
+<body>
+  <h1>รดน้ำต้นไม้</h1>
+  <p>
+    เขียนโปรแกรมอ่านค่าระดับความชื้นเพื่อควบคุมระบบรดน้ำต้นไม้  โปรแกรมดังกล่าวจะถูกเรียกให้ทำงานซ้ำๆ กันทุก ๆ หนึ่งวินาที  สามารถทดลองให้ทำงานกับระดับความร้อนของแดดแบบต่าง ๆ ได้
+  </p>
+
+  <p>
+    ปรับระดับความร้อนของแสงแดด <input id="height_input_id" type="range" min="0" max="100" /> 
+    ระดับความร้อน: <span id="height_id"></span> หน่วย
+    <button onclick="showCode()">Show Code</button>
+    <button onclick="runCode()">Run Code</button>
+  </p>
+
+  <div id="plantDiv" style="float: left; width: 160px;">
+  </div>
+  <div id="blocklyDiv" style="height: 480px; width: 640px; margin-left: 165px;"></div>
+  
+  <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
+    <category name="เงื่อนไข">
+      <block type="controls_if">
+        <mutation else="1"></mutation>
+      </block>
+      <block type="controls_if"></block>
+      <block type="logic_compare">
+        <field name="OP">EQ</field>
+      </block>
+      <block type="math_number">
+        <field name="NUM">0</field>
+      </block>
+    </category>
+    <category name="อ่านและควบคุม">
+      <block type="variables_set">
+        <field name="VAR" id=";*}x{Gzx8H!,@OPcXJ+s" variabletype="">H</field>
+      </block>
+      <block type="variables_set">
+        <field name="VAR" id=";*}x{Gzx8H!,@OPcXJ+s" variabletype="">H</field>
+      </block>
+      <block type="variables_get">
+        <field name="VAR" id=";*}x{Gzx8H!,@OPcXJ+s" variabletype="">H</field>
+      </block>
+      <block type="get_water_level"></block>
+      <block type="signal_water_on"></block>
+      <block type="signal_water_off"></block>
+    </category>
+    <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
+  </xml>
+
+  <xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
+  <variables>
+    <variable type="" id="q+8%vYa/x*Al80J_qr0m">H</variable>
+  </variables>
+  <block type="variables_set" id="+TOpX6Xs3c^qqk|TTpf(" x="13" y="-262">
+    <field name="VAR" id="q+8%vYa/x*Al80J_qr0m" variabletype="">H</field>
+    <value name="VALUE">
+      <block type="get_water_level" id="s$B3uw)5Zh6F^fYy(}Qy"></block>
+    </value>
+  </block>
+</xml>
+  
+  <script>
+   var workspace = Blockly.inject(
+     'blocklyDiv',
+     { media: '../media/',
+       toolbox: document.getElementById('toolbox'),
+       trashcan: true }
+   );
+
+   var workspaceBlocks = document.getElementById("workspaceBlocks"); 
+   Blockly.Xml.domToWorkspace(workspace, workspaceBlocks);
+   
+   function getWaterLevel() {
+   }
+   
+   function signalWaterOn() {
+   }
+   
+   function signalWaterOff() {
+   }
+   
+   function showCode() {
+     // Generate JavaScript code and display it.
+     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+     var code = Blockly.JavaScript.workspaceToCode(workspace);
+     alert(code);
+   }
+   
+   function runCode() {
+     // Generate JavaScript code and run it.
+     window.LoopTrap = 1000;
+     Blockly.JavaScript.INFINITE_LOOP_TRAP =
+       'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+     var code = Blockly.JavaScript.workspaceToCode(workspace);
+     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+     try {
+       eval(code);
+     } catch (e) {
+       alert(e);
+     }
+   }
+
+   var updateHeight = function() {
+     $("#height_id").text($("#height_input_id").val());
+   };
+   
+   $(function(){
+     $('input[type=range]').on('input', function () {
+       $(this).trigger('change');
+     });
+     updateHeight();
+     $("#height_input_id").change(function(){
+       updateHeight();
+     });
+   });
+  </script>
+</body>
+</html>

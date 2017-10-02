@@ -1,0 +1,11 @@
+<xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
+  <variables>
+    <variable type="" id="q+8%vYa/x*Al80J_qr0m">H</variable>
+  </variables>
+  <block type="variables_set" id="+TOpX6Xs3c^qqk|TTpf(" x="13" y="-262">
+    <field name="VAR" id="q+8%vYa/x*Al80J_qr0m" variabletype="">H</field>
+    <value name="VALUE">
+      <block type="get_water_level" id="s$B3uw)5Zh6F^fYy(}Qy"></block>
+    </value>
+  </block>
+</xml>
