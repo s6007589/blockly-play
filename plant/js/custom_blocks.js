@@ -4,7 +4,7 @@ var blockTypes = [
   'signal_water_off'
 ];
 var blockDescriptions = [{
-  "message0": "อ่านระดับความชื้น",
+  "message0": "ระดับความชื้น",
   "inputsInline": false,
   "output": "Number",
   "colour": 345,
