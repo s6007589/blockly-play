@@ -48,6 +48,9 @@
               stroke="orange" stroke-width="1"
               fill="yellow" fill-opacity="0.8" />
       <text id="waterLevelTextId" x="75" y="280" text-anchor="middle">10%</text>
+      <circle id="dropId" cx="40" cy="180" r="5"
+              stroke="black" stroke-width="1"
+              fill="gray" fill-opacity="0.8" />
     </svg>
   </div>
   <div style="float:right">
@@ -86,15 +89,15 @@
   </xml>
 
   <xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
-  <variables>
-    <variable type="" id="q+8%vYa/x*Al80J_qr0m">H</variable>
-  </variables>
-  <block type="variables_set" id="+TOpX6Xs3c^qqk|TTpf(" x="13" y="-262">
-    <field name="VAR" id="q+8%vYa/x*Al80J_qr0m" variabletype="">H</field>
-    <value name="VALUE">
-      <block type="get_water_level" id="s$B3uw)5Zh6F^fYy(}Qy"></block>
-    </value>
-  </block>
+    <variables>
+      <variable type="" id="q+8%vYa/x*Al80J_qr0m">H</variable>
+    </variables>
+    <block type="variables_set" id="+TOpX6Xs3c^qqk|TTpf(" x="13" y="-262">
+      <field name="VAR" id="q+8%vYa/x*Al80J_qr0m" variabletype="">H</field>
+      <value name="VALUE">
+        <block type="get_water_level" id="s$B3uw)5Zh6F^fYy(}Qy"></block>
+      </value>
+    </block>
   </xml>
   
   <script>
@@ -125,11 +128,12 @@
    
    function signalWaterOn() {
      isWaterOn = true;
-     console.log("on");
+     $("#dropId").attr('stroke', 'blue').attr('fill','blue');
    }
    
    function signalWaterOff() {
      isWaterOn = false;
+     $("#dropId").attr('stroke', 'black').attr('fill','gray');
    }
 
    function applySun() {
@@ -139,6 +143,7 @@
      if(waterLevel < 0) {
        waterLevel = 0;
      }
+     showWaterLevel();
    }
    
    function gameLoop() {
@@ -149,12 +154,22 @@
        //alert(e);
      }
      if(isWaterOn) {
-       waterLevel += waterChunkSize;
-       if(waterLevel > 100) {
-         waterLevel = 100;
-       }
+       var counter = 0;
+       var handle = window.setInterval(function() {
+         counter++;
+         if(counter < 10) {
+           $("#dropId").attr('cy',180 + counter*6);
+         } else {
+           $("#dropId").attr('cy',180);
+           waterLevel += waterChunkSize;
+           if(waterLevel > 100) {
+             waterLevel = 100;
+           }
+           showWaterLevel();
+           window.clearInterval(handle);
+         }
+       }, 50);
      }
-     showWaterLevel();
    }
    
    function showCode() {
@@ -163,9 +178,9 @@
      var code = Blockly.JavaScript.workspaceToCode(workspace);
      alert(code);
    }
-
+   
    var intervalId = null;
-
+   
    function runCode() {
      // Generate JavaScript code and run it.
      window.LoopTrap = 1000;
@@ -177,10 +192,10 @@
        window.clearInterval(intervalId);
      }
      intervalId = window.setInterval(gameLoop, simulationTimeInterval);
-
+     
      $("#codeDiv").text(generatedCode);
    }
-
+   
    var updateSunLevel = function() {
      var h = $("#height_input_id").val();
      $("#height_id").text(h);
@@ -196,7 +211,7 @@
      $("#height_input_id").change(function(){
        updateSunLevel();
      });
-
+     
      showWaterLevel();
    });
   </script>
