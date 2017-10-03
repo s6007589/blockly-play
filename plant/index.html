@@ -23,7 +23,7 @@
 <body>
   <h1>รดน้ำต้นไม้</h1>
   <p>
-    เขียนโปรแกรมอ่านค่าระดับความชื้นเพื่อควบคุมระบบรดน้ำต้นไม้  โปรแกรมดังกล่าวจะถูกเรียกให้ทำงานซ้ำๆ กันทุก ๆ หนึ่งวินาที  สามารถทดลองให้ทำงานกับระดับความร้อนของแดดแบบต่าง ๆ ได้
+    เขียนโปรแกรมอ่านค่าระดับความชื้นเพื่อควบคุมระบบรดน้ำต้นไม้  โปรแกรมดังกล่าวจะถูกเรียกให้ทำงานซ้ำๆ กันทุก ๆ หนึ่งวินาที  สามารถทดลองให้ทำงานกับระดับความร้อนของแดดแบบต่าง ๆ ได้  ระดับความชื้นที่อ่านได้มีค่าระหว่าง 0 - 100 หน่วย ระดับความชื้นที่เหมาะสมคือ 40 - 60 หน่วย 
   </p>
 
   <p>
@@ -40,9 +40,22 @@
       <line x1="75" y1="250" x2="75" y2="100"
             stroke="gray" />
       <circle cx="75" cy="100" r="60"
-              stroke="gray" fill-opacity="0" />
+              stroke="green" stroke-width="3" stroke-opacity="0.5"
+              fill="green" fill-opacity="0.2" />
+      <rect id="waterLevelId" x="25" y="220" width="100" height="80"
+            fill="#2222ff" stroke="gray" fill-opacity="0.8" />
+      <circle id="sunLevelId" cx="130" cy="20" r="19"
+              stroke="orange" stroke-width="1"
+              fill="yellow" fill-opacity="0.8" />
+      <text id="waterLevelTextId" x="75" y="280" text-anchor="middle">10%</text>
     </svg>
   </div>
+  <div style="float:right">
+    โปรแกรมที่ทำงานขณะนี้<br />
+    <pre id="codeDiv">
+    </pre>
+  </div>
+  
   <div id="blocklyDiv" style="height: 440px; width: 700px; margin-left: 165px;"></div>
   
   <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
@@ -82,7 +95,7 @@
       <block type="get_water_level" id="s$B3uw)5Zh6F^fYy(}Qy"></block>
     </value>
   </block>
-</xml>
+  </xml>
   
   <script>
    var workspace = Blockly.inject(
@@ -94,14 +107,54 @@
 
    var workspaceBlocks = document.getElementById("workspaceBlocks"); 
    Blockly.Xml.domToWorkspace(workspace, workspaceBlocks);
+
+   var simulationTimeInterval = 1500;
+   var waterChunkSize = 10;
+   var isWaterOn = false;
+   var generatedCode = '';
+   var waterLevel = 50;
+   
+   function showWaterLevel() {
+     $("#waterLevelTextId").text(waterLevel + "%");
+     $("#waterLevelId").attr("fill-opacity", 0.1 + waterLevel*(0.009));
+   }
    
    function getWaterLevel() {
+     return waterLevel;
    }
    
    function signalWaterOn() {
+     isWaterOn = true;
+     console.log("on");
    }
    
    function signalWaterOff() {
+     isWaterOn = false;
+   }
+
+   function applySun() {
+     var h = $("#height_input_id").val();
+     var amount = parseInt(h*0.12);
+     waterLevel -= amount;
+     if(waterLevel < 0) {
+       waterLevel = 0;
+     }
+   }
+   
+   function gameLoop() {
+     applySun();
+     try {
+       eval(generatedCode);
+     } catch (e) {
+       //alert(e);
+     }
+     if(isWaterOn) {
+       waterLevel += waterChunkSize;
+       if(waterLevel > 100) {
+         waterLevel = 100;
+       }
+     }
+     showWaterLevel();
    }
    
    function showCode() {
@@ -110,33 +163,41 @@
      var code = Blockly.JavaScript.workspaceToCode(workspace);
      alert(code);
    }
-   
+
+   var intervalId = null;
+
    function runCode() {
      // Generate JavaScript code and run it.
      window.LoopTrap = 1000;
      Blockly.JavaScript.INFINITE_LOOP_TRAP =
        'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
-     var code = Blockly.JavaScript.workspaceToCode(workspace);
+     generatedCode = Blockly.JavaScript.workspaceToCode(workspace);
      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-     try {
-       eval(code);
-     } catch (e) {
-       alert(e);
+     if(intervalId) {
+       window.clearInterval(intervalId);
      }
+     intervalId = window.setInterval(gameLoop, simulationTimeInterval);
+
+     $("#codeDiv").text(generatedCode);
    }
 
-   var updateHeight = function() {
-     $("#height_id").text($("#height_input_id").val());
+   var updateSunLevel = function() {
+     var h = $("#height_input_id").val();
+     $("#height_id").text(h);
+     $("#sunLevelId").attr("fill-opacity",0.25 + parseInt(h)*(0.005));
+     $("#sunLevelId").attr("stroke-width",1 + parseInt(h)*(0.02));
    };
    
    $(function(){
      $('input[type=range]').on('input', function () {
        $(this).trigger('change');
      });
-     updateHeight();
+     updateSunLevel();
      $("#height_input_id").change(function(){
-       updateHeight();
+       updateSunLevel();
      });
+
+     showWaterLevel();
    });
   </script>
 </body>
