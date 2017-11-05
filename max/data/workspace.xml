@@ -1,0 +1,9 @@
+<xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
+  <variables>
+    <variable type="" id="eBcujxPkG9/`~]Y#e$`)">Max</variable>
+    <variable type="" id="ZPq6Ulk#?Z:9@n|5KY3V">X</variable>
+  </variables>
+  <block type="variables_set" id="t?h$9O5cPLoooFFZV1EW" x="13" y="-12">
+    <field name="VAR" id="eBcujxPkG9/`~]Y#e$`)" variabletype="">Max</field>
+  </block>
+</xml>

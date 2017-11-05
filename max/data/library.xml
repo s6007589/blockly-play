@@ -1,0 +1,205 @@
+<xml xmlns="http://www.w3.org/1999/xhtml"><block type="factory_base" id="c?Z{rgw0hcU7Eal}(REh" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="LEFT"></mutation>
+    <field name="NAME">first_element</field>
+    <field name="INLINE">EXT</field>
+    <field name="CONNECTIONS">LEFT</field>
+    <statement name="INPUTS">
+      <block type="input_dummy" id="|8IF96{@WHYL-+jL0XXe">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="XwdrGLUp6RLxHQa`c7nJ">
+            <field name="TEXT">ข้อมูลในรายการตัวแรก</field>
+          </block>
+        </statement>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="(6`m]:t%GzmY@o3Go:S@" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="kA9^E2g^GG;$-Ownz9(l" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="OUTPUTTYPE">
+      <shadow type="type_null" id="up^hgMQNNL?B.BFGepbs"></shadow>
+      <block type="type_number" id="CdbhBOuRrr`W2g:XH+Cy"></block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="_D5=@O,B%+b@dh(VBSVW">
+        <mutation colour="#a55b5b"></mutation>
+        <field name="HUE">0</field>
+      </block>
+    </value>
+  </block><block type="factory_base" id="cGZc2udv1CfVh.KDR#5`" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="LEFT"></mutation>
+    <field name="NAME">ith_element</field>
+    <field name="INLINE">INT</field>
+    <field name="CONNECTIONS">LEFT</field>
+    <statement name="INPUTS">
+      <block type="input_dummy" id="3sK?fhhx4GvqnOjZ-hP7">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id="ddth?Dmwd#dV6;lZZPeN">
+            <field name="TEXT">ข้อมูลในรายการตัวที่</field>
+          </block>
+        </statement>
+        <next>
+          <block type="input_value" id="~WZ9O).4:Y$4[_NG21x`">
+            <field name="INPUTNAME">index</field>
+            <field name="ALIGN">RIGHT</field>
+            <value name="TYPE">
+              <shadow type="type_null" id="!v*ryET^lK@.y$~f_L:V"></shadow>
+              <block type="type_number" id="4:K`3PuF%Kt-Qam`.d(N"></block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="p%=]NnHBvu2Q7%X@#~}[" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="Byk89KE[-]C0-0PEv/7T" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="OUTPUTTYPE">
+      <shadow type="type_null" id="~V^3Du(5YdemOf7Rm,[("></shadow>
+      <block type="type_number" id="UOB7Ede*5209EYcgSJz8"></block>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="zVX8o8Euq(GiAG{XAM{.">
+        <mutation colour="#a55b5b"></mutation>
+        <field name="HUE">0</field>
+      </block>
+    </value>
+  </block><block type="factory_base" id="eilQ4THHg~OFWAIDssdS" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="BOTH"></mutation>
+    <field name="NAME">array_loop</field>
+    <field name="INLINE">INT</field>
+    <field name="CONNECTIONS">BOTH</field>
+    <statement name="INPUTS">
+      <block type="input_dummy" id="q/+HHr(?g9*g=bPi=9#W">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id=":bm+^kOHcZxhiF[I2#^4">
+            <field name="TEXT">พิจารณาข้อมูลในรายการ</field>
+          </block>
+        </statement>
+        <next>
+          <block type="input_statement" id="Mj|HMF($L|,:O1}QDeM%">
+            <field name="INPUTNAME">statement</field>
+            <field name="ALIGN">LEFT</field>
+            <statement name="FIELDS">
+              <block type="field_static" id="Gm,T[I~E6Ic`=pnJ;Fk{">
+                <field name="TEXT">ใช้ตัวแปร</field>
+                <next>
+                  <block type="field_variable" id="d=hYZxFxemk;64?brqxQ">
+                    <field name="TEXT">x</field>
+                    <field name="FIELDNAME">loopvar</field>
+                    <next>
+                      <block type="field_static" id="C)QHvi$%wY}`[$f(~;/j">
+                        <field name="TEXT">แทนข้อมูล</field>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <value name="TYPE">
+              <shadow type="type_null" id="HMUCch#1QCwJP(-Nq@0$"></shadow>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="7Xpg0]?dsqQs47z942Hn" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="8EO)DKz{Edyf*m2o9$w." deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="TOPTYPE">
+      <shadow type="type_null" id="~{X](t`J+ypDNMJy5TPX"></shadow>
+    </value>
+    <value name="BOTTOMTYPE">
+      <shadow type="type_null" id="zw6t?9/iCc9U{*S||VWs"></shadow>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="Iy?QPbI]31tNPmxY-}t0">
+        <mutation colour="#5b67a5"></mutation>
+        <field name="HUE">230</field>
+      </block>
+    </value>
+  </block><block type="factory_base" id="eilQ4THHg~OFWAIDssdS" deletable="false" movable="false" x="0" y="0">
+    <mutation connections="BOTH"></mutation>
+    <field name="NAME">array_loop_skip_first</field>
+    <field name="INLINE">INT</field>
+    <field name="CONNECTIONS">BOTH</field>
+    <statement name="INPUTS">
+      <block type="input_dummy" id="q/+HHr(?g9*g=bPi=9#W">
+        <field name="ALIGN">LEFT</field>
+        <statement name="FIELDS">
+          <block type="field_static" id=":bm+^kOHcZxhiF[I2#^4">
+            <field name="TEXT">พิจารณาข้อมูลในรายการ ตั้งแต่ตัวที่สอง</field>
+          </block>
+        </statement>
+        <next>
+          <block type="input_statement" id="Mj|HMF($L|,:O1}QDeM%">
+            <field name="INPUTNAME">statement</field>
+            <field name="ALIGN">LEFT</field>
+            <statement name="FIELDS">
+              <block type="field_static" id="Gm,T[I~E6Ic`=pnJ;Fk{">
+                <field name="TEXT">ใช้ตัวแปร</field>
+                <next>
+                  <block type="field_variable" id="d=hYZxFxemk;64?brqxQ">
+                    <field name="TEXT">x</field>
+                    <field name="FIELDNAME">loopvar</field>
+                    <next>
+                      <block type="field_static" id="C)QHvi$%wY}`[$f(~;/j">
+                        <field name="TEXT">แทนข้อมูล</field>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <value name="TYPE">
+              <shadow type="type_null" id="HMUCch#1QCwJP(-Nq@0$"></shadow>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <value name="TOOLTIP">
+      <block type="text" id="7Xpg0]?dsqQs47z942Hn" deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="HELPURL">
+      <block type="text" id="8EO)DKz{Edyf*m2o9$w." deletable="false" movable="false">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+    <value name="TOPTYPE">
+      <shadow type="type_null" id="fWQWs[2J:ab8:J(mZbwd"></shadow>
+    </value>
+    <value name="BOTTOMTYPE">
+      <shadow type="type_null" id="`DpqN`4CjWA[h,N]u1W5"></shadow>
+    </value>
+    <value name="COLOUR">
+      <block type="colour_hue" id="Iy?QPbI]31tNPmxY-}t0">
+        <mutation colour="#5b67a5"></mutation>
+        <field name="HUE">230</field>
+      </block>
+    </value>
+  </block></xml>
