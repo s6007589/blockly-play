@@ -48,7 +48,7 @@
         </statement>
         <next>
           <block type="input_value" id="~WZ9O).4:Y$4[_NG21x`">
-            <field name="INPUTNAME">index</field>
+            <field name="INPUTNAME">INDEX</field>
             <field name="ALIGN">RIGHT</field>
             <value name="TYPE">
               <shadow type="type_null" id="!v*ryET^lK@.y$~f_L:V"></shadow>
@@ -93,15 +93,15 @@
         </statement>
         <next>
           <block type="input_statement" id="Mj|HMF($L|,:O1}QDeM%">
-            <field name="INPUTNAME">statement</field>
+            <field name="INPUTNAME">DO</field>
             <field name="ALIGN">LEFT</field>
             <statement name="FIELDS">
               <block type="field_static" id="Gm,T[I~E6Ic`=pnJ;Fk{">
                 <field name="TEXT">ใช้ตัวแปร</field>
                 <next>
                   <block type="field_variable" id="d=hYZxFxemk;64?brqxQ">
-                    <field name="TEXT">x</field>
-                    <field name="FIELDNAME">loopvar</field>
+                    <field name="TEXT">var</field>
+                    <field name="FIELDNAME">LOOPVAR</field>
                     <next>
                       <block type="field_static" id="C)QHvi$%wY}`[$f(~;/j">
                         <field name="TEXT">แทนข้อมูล</field>
@@ -155,15 +155,15 @@
         </statement>
         <next>
           <block type="input_statement" id="Mj|HMF($L|,:O1}QDeM%">
-            <field name="INPUTNAME">statement</field>
+            <field name="INPUTNAME">DO</field>
             <field name="ALIGN">LEFT</field>
             <statement name="FIELDS">
               <block type="field_static" id="Gm,T[I~E6Ic`=pnJ;Fk{">
                 <field name="TEXT">ใช้ตัวแปร</field>
                 <next>
                   <block type="field_variable" id="d=hYZxFxemk;64?brqxQ">
-                    <field name="TEXT">x</field>
-                    <field name="FIELDNAME">loopvar</field>
+                    <field name="TEXT">var</field>
+                    <field name="FIELDNAME">LOOPVAR</field>
                     <next>
                       <block type="field_static" id="C)QHvi$%wY}`[$f(~;/j">
                         <field name="TEXT">แทนข้อมูล</field>

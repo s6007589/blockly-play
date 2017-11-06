@@ -20,7 +20,7 @@ var blockDescriptions = [{
     },
     {
       "type": "input_value",
-      "name": "index",
+      "name": "INDEX",
       "check": "Number",
       "align": "RIGHT"
     }
@@ -39,12 +39,12 @@ var blockDescriptions = [{
     },
     {
       "type": "field_variable",
-      "name": "loopvar",
-      "variable": "x"
+      "name": "LOOPVAR",
+      "variable": "X"
     },
     {
       "type": "input_statement",
-      "name": "statement"
+      "name": "DO"
     }
   ],
   "inputsInline": true,
@@ -62,12 +62,12 @@ var blockDescriptions = [{
     },
     {
       "type": "field_variable",
-      "name": "loopvar",
-      "variable": "x"
+      "name": "LOOPVAR",
+      "variable": "X"
     },
     {
       "type": "input_statement",
-      "name": "statement"
+      "name": "DO"
     }
   ],
   "inputsInline": true,
@@ -97,7 +97,7 @@ Blockly.JavaScript['first_element'] = function(block) {
 };
 
 Blockly.JavaScript['ith_element'] = function(block) {
-  var value_index = Blockly.JavaScript.valueToCode(block, 'index', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_index = Blockly.JavaScript.valueToCode(block, 'INDEX', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
   var code = '...';
   // TODO: Change ORDER_NONE to the correct strength.
@@ -105,16 +105,24 @@ Blockly.JavaScript['ith_element'] = function(block) {
 };
 
 Blockly.JavaScript['array_loop'] = function(block) {
-  var variable_loopvar = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('loopvar'), Blockly.Variables.NAME_TYPE);
-  var statements_statement = Blockly.JavaScript.statementToCode(block, 'statement');
-  // TODO: Assemble JavaScript into code variable.
-  var code = '...;\n';
+  var variable_loopvar = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('LOOPVAR'), Blockly.Variables.NAME_TYPE);
+  var statements_statement = Blockly.JavaScript.statementToCode(block, 'DO');
+
+  var branch = Blockly.JavaScript.statementToCode(block, 'DO');
+  branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
+
+  var forVar = Blockly.JavaScript.variableDB_.getDistinctName('count', Blockly.Variables.NAME_TYPE);
+
+  var code = '';
+  code += 'for (var ' + forVar + ' = 0; ' + forVar + ' < 20; ' + forVar + '++) {\n' +
+    variable_loopvar + ' = a[' + forVar + '];\n' + 
+    branch + '}\n';
   return code;
 };
 
 Blockly.JavaScript['array_loop_skip_first'] = function(block) {
-  var variable_loopvar = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('loopvar'), Blockly.Variables.NAME_TYPE);
-  var statements_statement = Blockly.JavaScript.statementToCode(block, 'statement');
+  var variable_loopvar = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('LOOPVAR'), Blockly.Variables.NAME_TYPE);
+  var statements_statement = Blockly.JavaScript.statementToCode(block, 'DO');
   // TODO: Assemble JavaScript into code variable.
   var code = '...;\n';
   return code;
