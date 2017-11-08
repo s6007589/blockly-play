@@ -89,16 +89,18 @@ for(var i=0; i < blockDescriptions.length; i++) {
   };
 }
 
-ARRAY_VARIABLE_NAME = 'myArray';
-
 Blockly.JavaScript['first_element'] = function(block) {
-  var code = ARRAY_VARIABLE_NAME + '[0]';
+  // TODO: Assemble JavaScript into code variable.
+  var code = '...';
+  // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
 Blockly.JavaScript['ith_element'] = function(block) {
   var value_index = Blockly.JavaScript.valueToCode(block, 'INDEX', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = ARRAY_VARIABLE_NAME + '[' + value_index + ']';
+  // TODO: Assemble JavaScript into code variable.
+  var code = '...';
+  // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
@@ -113,7 +115,7 @@ Blockly.JavaScript['array_loop'] = function(block) {
 
   var code = '';
   code += 'for (var ' + forVar + ' = 0; ' + forVar + ' < 20; ' + forVar + '++) {\n' +
-    variable_loopvar + ' = ' + ARRAY_VARIABLE_NAME + '[' + forVar + '];\n' + 
+    variable_loopvar + ' = a[' + forVar + '];\n' + 
     branch + '}\n';
   return code;
 };
@@ -121,15 +123,7 @@ Blockly.JavaScript['array_loop'] = function(block) {
 Blockly.JavaScript['array_loop_skip_first'] = function(block) {
   var variable_loopvar = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('LOOPVAR'), Blockly.Variables.NAME_TYPE);
   var statements_statement = Blockly.JavaScript.statementToCode(block, 'DO');
-
-  var branch = Blockly.JavaScript.statementToCode(block, 'DO');
-  branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
-
-  var forVar = Blockly.JavaScript.variableDB_.getDistinctName('count', Blockly.Variables.NAME_TYPE);
-
-  var code = '';
-  code += 'for (var ' + forVar + ' = 1; ' + forVar + ' < 20; ' + forVar + '++) {\n' +
-    variable_loopvar + ' = ' + ARRAY_VARIABLE_NAME + '[' + forVar + '];\n' + 
-    branch + '}\n';
+  // TODO: Assemble JavaScript into code variable.
+  var code = '...;\n';
   return code;
 };

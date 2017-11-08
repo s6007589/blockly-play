@@ -3,13 +3,14 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Blockly Demo: Plant</title>
+  <title>Blockly: Max</title>
   <script src="../js/blockly_compressed.js"></script>
   <script src="../js/javascript_compressed.js"></script>
   <script src="../js/blocks_compressed.js"></script>
   <script src="js/custom_blocks.js"></script>
   <script src="../js/th.js"></script>
   <script src="../js/jquery/jquery-3.2.1.min.js"></script>
+  <script src="../js/acorn_interpreter.js"></script>
   <style>
    body {
        background-color: #fff;
@@ -26,12 +27,12 @@
   <p>
     เขียนโปรแกรมหาค่าสูงที่สุดจากรายการ
   </p>
-
+  
   <p>
     <button onclick="showCode()">Show Code</button>
     <button onclick="runCode()">Run Code</button>
   </p>
-
+  
   <div style="float:right">
     โปรแกรมที่ทำงานขณะนี้<br />
     <pre id="codeDiv">
@@ -39,7 +40,7 @@
   </div>
   
   <div id="blocklyDiv" style="height: 600px; width: 700px;"></div>
-
+  
   <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
     <category name="Data">
       <block type="variables_set">
@@ -82,34 +83,127 @@
     </category>
     <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
   </xml>
+  
 
   <xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
     <variables>
-      <variable type="" id="eBcujxPkG9/`~]Y#e$`)">Max</variable>
-      <variable type="" id="ZPq6Ulk#?Z:9@n|5KY3V">X</variable>
+      <variable type="" id="xO|7zylrhOCeOEwyoLBD">Max</variable>
+      <variable type="" id="OLq[rr]_REZqSFrGrPBR">var</variable>
+      <variable type="" id="x:@9Z,t2mQ2!tQjE~gQ;">X</variable>
     </variables>
-    <block type="variables_set" id="t?h$9O5cPLoooFFZV1EW" x="13" y="-12">
-      <field name="VAR" id="eBcujxPkG9/`~]Y#e$`)" variabletype="">Max</field>
+    <block type="variables_set" id="Kz9)6bB#;8KS(?S4L/$*" x="29" y="60">
+      <field name="VAR" id="xO|7zylrhOCeOEwyoLBD" variabletype="">Max</field>
+      <value name="VALUE">
+        <block type="first_element" id="$ehQODokFNSIW.Bk1D|J"></block>
+      </value>
+      <next>
+        <block type="array_loop_skip_first" id="qKb*78ZxTCO][$.Wej18">
+          <field name="LOOPVAR" id="x:@9Z,t2mQ2!tQjE~gQ;" variabletype="">X</field>
+          <statement name="DO">
+            <block type="controls_if" id="v_G)5ANt:*]s5.4VGTL7">
+              <value name="IF0">
+                <block type="logic_compare" id="lECF8PvOXe9s*x[|:axZ">
+                  <field name="OP">GT</field>
+                  <value name="A">
+                    <block type="variables_get" id=",R_K(X*jhmzHg/$=alX,">
+                      <field name="VAR" id="x:@9Z,t2mQ2!tQjE~gQ;" variabletype="">X</field>
+                    </block>
+                  </value>
+                  <value name="B">
+                    <block type="variables_get" id="95=j9iWc?=Ip=iTDK.G:">
+                      <field name="VAR" id="xO|7zylrhOCeOEwyoLBD" variabletype="">Max</field>
+                    </block>
+                  </value>
+                </block>
+              </value>
+              <statement name="DO0">
+                <block type="variables_set" id="f^(@ho.1*cuC!Q3rP8x0">
+                  <field name="VAR" id="xO|7zylrhOCeOEwyoLBD" variabletype="">Max</field>
+                  <value name="VALUE">
+                    <block type="variables_get" id="$UwB^e^FIEJe1_@KzE#(">
+                      <field name="VAR" id="x:@9Z,t2mQ2!tQjE~gQ;" variabletype="">X</field>
+                    </block>
+                  </value>
+                </block>
+              </statement>
+            </block>
+          </statement>
+        </block>
+      </next>
     </block>
   </xml>
-  
+
   <script>
-   var workspace = Blockly.inject(
-     'blocklyDiv',
-     { media: '../media/',
-       toolbox: document.getElementById('toolbox'),
-       trashcan: true }
-   );
+    var workspace = Blockly.inject(
+      'blocklyDiv',
+      { media: '../media/',
+        toolbox: document.getElementById('toolbox'),
+        trashcan: true }
+    );
+    
+    var workspaceBlocks = document.getElementById("workspaceBlocks");
+    Blockly.Xml.domToWorkspace(workspace, workspaceBlocks);
 
-   var workspaceBlocks = document.getElementById("workspaceBlocks"); 
-   Blockly.Xml.domToWorkspace(workspace, workspaceBlocks);
+    function showCode() {
+      // Generate JavaScript code and display it.
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      alert(code);
+    }
 
-   function showCode() {
-     // Generate JavaScript code and display it.
-     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-     var code = Blockly.JavaScript.workspaceToCode(workspace);
-     alert(code);
-   }
+    function initApi(interpreter, scope) {
+      // Add an API function for the alert() block.
+      var wrapper = function(text) {
+        text = text ? text.toString() : '';
+        return interpreter.createPrimitive(alert(text));
+      };
+      interpreter.setProperty(scope, 'alert',
+                              interpreter.createNativeFunction(wrapper));
+      
+      // Add an API function for the prompt() block.
+      wrapper = function(text) {
+        text = text ? text.toString() : '';
+        return interpreter.createPrimitive(prompt(text));
+      };
+      interpreter.setProperty(scope, 'prompt',
+                              interpreter.createNativeFunction(wrapper));
+
+      // Add an API function for highlighting blocks.
+      var wrapper = function(id) {
+        id = id ? id.toString() : '';
+        return interpreter.createPrimitive(workspace.highlightBlock(id));
+      };
+      interpreter.setProperty(scope, 'highlightBlock',
+                              interpreter.createNativeFunction(wrapper));
+    }
+
+    var interpreter = null;
+    
+    function nextStep() {
+      if (interpreter.step()) {
+        window.setTimeout(nextStep, 10);
+      }
+    }
+
+    function runCode() {
+      // Generate JavaScript code and run it.
+      window.LoopTrap = 1000;
+      Blockly.JavaScript.INFINITE_LOOP_TRAP =
+        'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+      Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+      Blockly.JavaScript.addReservedWords('highlightBlock');
+
+      generatedCode = 'var myArray = [10,20,15,30,20,12];\n' +
+                      Blockly.JavaScript.workspaceToCode(workspace) + '\n' +
+                      'alert(Max);\n';
+
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      Blockly.JavaScript.STATEMENT_PREFIX = '';
+
+      $("#codeDiv").text(generatedCode);
+      interpreter = new Interpreter(generatedCode, initApi);
+      nextStep();
+    }
   </script>
 </body>
 </html>
