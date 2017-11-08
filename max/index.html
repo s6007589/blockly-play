@@ -144,15 +144,45 @@
     var workspaceBlocks = document.getElementById("workspaceBlocks");
     Blockly.Xml.domToWorkspace(workspace, workspaceBlocks);
 
-    function showCode() {
-      // Generate JavaScript code and display it.
-      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+    function generateCode(forDisplay) {
+      if(forDisplay) {
+        Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+        MaxCustomBlock.ARRAY_VARIABLE_NAME = 'A';
+      } else {
+        Blockly.JavaScript.INFINITE_LOOP_TRAP =
+          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+        Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+        Blockly.JavaScript.addReservedWords('highlightBlock');
+
+        MaxCustomBlock.HIGHLIGHT_ARRAY_ACCESS = true;
+        MaxCustomBlock.HIGHLIGHT_VARIABLE_SET = true;
+        Blockly.JavaScript.addReservedWords('highlightArrayAccess');
+        Blockly.JavaScript.addReservedWords('highlightVariableSet');
+      }
+
       var code = Blockly.JavaScript.workspaceToCode(workspace);
+
+      if(forDisplay) {
+        MaxCustomBlock.ARRAY_VARIABLE_NAME = 'myArray';
+      } else {
+        code = 'var myArray = [10,20,15,30,20,12];\n' +
+               code + '\n' +
+               'alert(Max);\n';
+        
+        Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+        Blockly.JavaScript.STATEMENT_PREFIX = null;
+        MaxCustomBlock.HIGHLIGHT_ARRAY_ACCESS = false;
+        MaxCustomBlock.HIGHLIGHT_VARIABLE_SET = false;
+      }
+      return code;
+    }
+    
+    function showCode() {
+      var code = generateCode(true);
       alert(code);
     }
 
     function initApi(interpreter, scope) {
-      // Add an API function for the alert() block.
       var wrapper = function(text) {
         text = text ? text.toString() : '';
         return interpreter.createPrimitive(alert(text));
@@ -160,7 +190,6 @@
       interpreter.setProperty(scope, 'alert',
                               interpreter.createNativeFunction(wrapper));
       
-      // Add an API function for the prompt() block.
       wrapper = function(text) {
         text = text ? text.toString() : '';
         return interpreter.createPrimitive(prompt(text));
@@ -168,12 +197,24 @@
       interpreter.setProperty(scope, 'prompt',
                               interpreter.createNativeFunction(wrapper));
 
-      // Add an API function for highlighting blocks.
-      var wrapper = function(id) {
+      wrapper = function(id) {
         id = id ? id.toString() : '';
         return interpreter.createPrimitive(workspace.highlightBlock(id));
       };
       interpreter.setProperty(scope, 'highlightBlock',
+                              interpreter.createNativeFunction(wrapper));
+
+      // highlightArrayAccess
+      wrapper = function(idx) {
+        console.log('Access array[' + idx + ']');
+      }
+      interpreter.setProperty(scope, 'highlightArrayAccess',
+                              interpreter.createNativeFunction(wrapper));
+      // highlightVariableSet
+      wrapper = function(varName, value) {
+        console.log('Set ' + varName + ' = ' + value.toString());
+      }
+      interpreter.setProperty(scope, 'highlightVariableSet',
                               interpreter.createNativeFunction(wrapper));
     }
 
@@ -188,19 +229,12 @@
     function runCode() {
       // Generate JavaScript code and run it.
       window.LoopTrap = 1000;
-      Blockly.JavaScript.INFINITE_LOOP_TRAP =
-        'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
-      Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
-      Blockly.JavaScript.addReservedWords('highlightBlock');
 
-      generatedCode = 'var myArray = [10,20,15,30,20,12];\n' +
-                      Blockly.JavaScript.workspaceToCode(workspace) + '\n' +
-                      'alert(Max);\n';
+      var displayGeneratedCode = generateCode(true);
+      $("#codeDiv").text(displayGeneratedCode);
 
-      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-      Blockly.JavaScript.STATEMENT_PREFIX = '';
+      var generatedCode = generateCode(false);
 
-      $("#codeDiv").text(generatedCode);
       interpreter = new Interpreter(generatedCode, initApi);
       nextStep();
     }

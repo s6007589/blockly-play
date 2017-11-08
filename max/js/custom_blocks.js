@@ -89,47 +89,65 @@ for(var i=0; i < blockDescriptions.length; i++) {
   };
 }
 
-ARRAY_VARIABLE_NAME = 'myArray';
+var MaxCustomBlock = {};
+MaxCustomBlock.ARRAY_VARIABLE_NAME = 'myArray';
+MaxCustomBlock.HIGHLIGHT_ARRAY_ACCESS = false;
+MaxCustomBlock.HIGHLIGHT_VARIABLE_SET = false;
 
 Blockly.JavaScript['first_element'] = function(block) {
-  var code = ARRAY_VARIABLE_NAME + '[0]';
+  var code = MaxCustomBlock.ARRAY_VARIABLE_NAME + '[0]';
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
 Blockly.JavaScript['ith_element'] = function(block) {
   var value_index = Blockly.JavaScript.valueToCode(block, 'INDEX', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = ARRAY_VARIABLE_NAME + '[' + value_index + ']';
+  var code = MaxCustomBlock.ARRAY_VARIABLE_NAME + '[' + value_index + ']';
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
-Blockly.JavaScript['array_loop'] = function(block) {
-  var variable_loopvar = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('LOOPVAR'), Blockly.Variables.NAME_TYPE);
-  var statements_statement = Blockly.JavaScript.statementToCode(block, 'DO');
+var arrayLoopGenerator = function(block, startIndex) {
+  var variableLoopvar = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('LOOPVAR'), Blockly.Variables.NAME_TYPE);
 
   var branch = Blockly.JavaScript.statementToCode(block, 'DO');
   branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
 
-  var forVar = Blockly.JavaScript.variableDB_.getDistinctName('count', Blockly.Variables.NAME_TYPE);
+  var forVar = Blockly.JavaScript.variableDB_.getDistinctName('i', Blockly.Variables.NAME_TYPE);
 
+  var highlightAccessStatement = '';
+  if(MaxCustomBlock.HIGHLIGHT_ARRAY_ACCESS) {
+    highlightAccessStatement = 'highlightArrayAccess(' + forVar + ');\n'
+  }
+  if(MaxCustomBlock.HIGHLIGHT_VARIABLE_SET) {
+    highlightAccessStatement = highlightAccessStatement +
+      'highlightVariableSet("' + variableLoopvar + '",' + variableLoopvar + ');\n';
+  }
+  
   var code = '';
-  code += 'for (var ' + forVar + ' = 0; ' + forVar + ' < 20; ' + forVar + '++) {\n' +
-    variable_loopvar + ' = ' + ARRAY_VARIABLE_NAME + '[' + forVar + '];\n' + 
+  code += 'for (var ' + forVar + ' = ' + startIndex.toString() + '; ' + forVar + ' < ' + MaxCustomBlock.ARRAY_VARIABLE_NAME + '.length; ' + forVar + '++) {\n' +
+    variableLoopvar + ' = ' + MaxCustomBlock.ARRAY_VARIABLE_NAME + '[' + forVar + '];\n' +
+    highlightAccessStatement + 
     branch + '}\n';
   return code;
+}
+
+Blockly.JavaScript['array_loop'] = function(block) {
+  return arrayLoopGenerator(block, 0);
 };
 
 Blockly.JavaScript['array_loop_skip_first'] = function(block) {
-  var variable_loopvar = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('LOOPVAR'), Blockly.Variables.NAME_TYPE);
-  var statements_statement = Blockly.JavaScript.statementToCode(block, 'DO');
+  return arrayLoopGenerator(block, 1);
+};
 
-  var branch = Blockly.JavaScript.statementToCode(block, 'DO');
-  branch = Blockly.JavaScript.addLoopTrap(branch, block.id);
-
-  var forVar = Blockly.JavaScript.variableDB_.getDistinctName('count', Blockly.Variables.NAME_TYPE);
-
-  var code = '';
-  code += 'for (var ' + forVar + ' = 1; ' + forVar + ' < 20; ' + forVar + '++) {\n' +
-    variable_loopvar + ' = ' + ARRAY_VARIABLE_NAME + '[' + forVar + '];\n' + 
-    branch + '}\n';
-  return code;
+Blockly.JavaScript['variables_set'] = function(block) {
+  // Variable setter.
+  var argument0 = Blockly.JavaScript.valueToCode(block, 'VALUE',
+                                                 Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+  var varName = Blockly.JavaScript.variableDB_.getName(
+    block.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
+  if(!MaxCustomBlock.HIGHLIGHT_VARIABLE_SET) {
+    return varName + ' = ' + argument0 + ';\n';
+  } else {
+    return varName + ' = ' + argument0 + ';\n' +
+      'highlightVariableSet("' + varName + '",' + varName + ');\n';
+  }
 };
