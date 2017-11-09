@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +23,40 @@
 </head>
 <body>
   <h1>หาค่าสูงที่สุด</h1>
+  <div style="float: right; border: 1px solid grey; padding: 5px;">
+    <table border="1" style="border-collapse: collapse;">
+      <tr>
+        <td>ข้อมูลในรายการ</td>
+        <td id="array_val_0">10</td>
+        <td id="array_val_1">1</td>
+        <td id="array_val_2">9</td>
+        <td id="array_val_3">25</td>
+        <td id="array_val_4">30</td>
+        
+        <td id="array_val_5">15</td>
+        <td id="array_val_6">12</td>
+        <td id="array_val_7">14</td>
+        <td id="array_val_8">20</td>
+        <td id="array_val_9">25</td>
+        
+        <td id="array_val_10">30</td>
+        <td id="array_val_11">10</td>
+        <td id="array_val_12">10</td>
+        <td id="array_val_13">10</td>
+        <td id="array_val_14">10</td>
+
+        <td id="array_val_15">10</td>
+        <td id="array_val_16">10</td>
+        <td id="array_val_17">10</td>
+        <td id="array_val_18">10</td>
+        <td id="array_val_19">10</td>        
+      </tr>
+    </table>
+    <div class="variables" id="var_max_id" style="display: inline-block; padding-left: 5px; padding-right: 5px;">Max: <span class="variable-values">0</span></div>
+    <div class="variables" id="var_x_id" style="display: inline-block; padding-left: 5px; padding-right: 5px;">X: <span class="variable-values">0</span></div>
+    <button onclick="randomArray()">สุ่มค่าในรายการ</button>
+  </div>
+  
   <p>
     เขียนโปรแกรมหาค่าสูงที่สุดจากรายการ
   </p>
@@ -39,7 +72,7 @@
     </pre>
   </div>
   
-  <div id="blocklyDiv" style="height: 600px; width: 700px;"></div>
+  <div id="blocklyDiv" style="height: 600px; width: 800px;"></div>
   
   <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
     <category name="Data">
@@ -134,6 +167,8 @@
   </xml>
 
   <script>
+    var inputArray = [];
+    
     var workspace = Blockly.inject(
       'blocklyDiv',
       { media: '../media/',
@@ -165,9 +200,9 @@
       if(forDisplay) {
         MaxCustomBlock.ARRAY_VARIABLE_NAME = 'myArray';
       } else {
-        code = 'var myArray = [10,20,15,30,20,12];\n' +
+        code = 'var myArray = [' + inputArray.join(',') + '];\n' +
                code + '\n' +
-               'alert(Max);\n';
+               'alert("โปรแกรมคืนค่า " + Max);\n';
         
         Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
         Blockly.JavaScript.STATEMENT_PREFIX = null;
@@ -182,6 +217,30 @@
       alert(code);
     }
 
+    function highlightArrayAccess(idx) {
+      var tdid = '#array_val_' + idx.toString();
+      $(tdid).css('background-color','#77ff77');
+      window.setTimeout(function() {
+        $(tdid).css('background-color','');
+      }, 500);
+    }
+
+    function highlightVariableSet(varName, value) {
+      var vname = '';
+      if(varName == 'Max') {
+        vname = 'max';
+      } else if(varName == 'X') {
+        vname = 'x';
+      }
+      if(vname != '') {
+        $('#var_' + vname + '_id .variable-values').text(value.toString());
+        $('#var_' + vname + '_id').css('background-color','#ff7777');
+        window.setTimeout(function() {
+          $('#var_' + vname + '_id').css('background-color','');
+        }, 500);
+      }
+    }
+    
     function initApi(interpreter, scope) {
       var wrapper = function(text) {
         text = text ? text.toString() : '';
@@ -209,13 +268,13 @@
         console.log('Access array[' + idx + ']');
       }
       interpreter.setProperty(scope, 'highlightArrayAccess',
-                              interpreter.createNativeFunction(wrapper));
+                              interpreter.createNativeFunction(highlightArrayAccess));
       // highlightVariableSet
       wrapper = function(varName, value) {
         console.log('Set ' + varName + ' = ' + value.toString());
       }
       interpreter.setProperty(scope, 'highlightVariableSet',
-                              interpreter.createNativeFunction(wrapper));
+                              interpreter.createNativeFunction(highlightVariableSet));
     }
 
     var interpreter = null;
@@ -238,6 +297,18 @@
       interpreter = new Interpreter(generatedCode, initApi);
       nextStep();
     }
+
+    function randomArray() {
+      var arrayLen = 20;
+      for(var i = 0; i < arrayLen; i++) {
+        inputArray[i] = Math.floor(Math.random() * 100);
+        $('#array_val_' + i.toString()).text(inputArray[i]);
+      }
+    }
+    
+    $(function(){
+      randomArray();
+    });
   </script>
 </body>
 </html>
