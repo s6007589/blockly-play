@@ -1,15 +1,15 @@
-
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Blockly Demo: Plant</title>
+  <title>Blockly: Max</title>
   <script src="../js/blockly_compressed.js"></script>
   <script src="../js/javascript_compressed.js"></script>
   <script src="../js/blocks_compressed.js"></script>
-  <script src="js/custom_blocks.js"></script>
+  <script src="../max/js/custom_blocks.js"></script>
   <script src="../js/th.js"></script>
   <script src="../js/jquery/jquery-3.2.1.min.js"></script>
+  <script src="../js/acorn_interpreter.js"></script>
   <style>
    body {
        background-color: #fff;
@@ -22,31 +22,68 @@
   </style>
 </head>
 <body>
-  <h1>หาค่าสูงที่สุด</h1>
-  <p>
-    เขียนโปรแกรมหาค่าสูงที่สุดจากรายการ
-  </p>
+  <h1>นับจำนวนข้อมูลที่มีค่าน้อยกว่า M</h1>
+  <div style="float: right; border: 1px solid grey; padding: 5px;">
+    <table border="1" style="border-collapse: collapse;">
+      <tr>
+        <td>ข้อมูลในรายการ</td>
+        <td id="array_val_0">10</td>
+        <td id="array_val_1">1</td>
+        <td id="array_val_2">9</td>
+        <td id="array_val_3">25</td>
+        <td id="array_val_4">30</td>
+        
+        <td id="array_val_5">15</td>
+        <td id="array_val_6">12</td>
+        <td id="array_val_7">14</td>
+        <td id="array_val_8">20</td>
+        <td id="array_val_9">25</td>
+        
+        <td id="array_val_10">30</td>
+        <td id="array_val_11">10</td>
+        <td id="array_val_12">10</td>
+        <td id="array_val_13">10</td>
+        <td id="array_val_14">10</td>
 
+        <td id="array_val_15">10</td>
+        <td id="array_val_16">10</td>
+        <td id="array_val_17">10</td>
+        <td id="array_val_18">10</td>
+        <td id="array_val_19">10</td>        
+      </tr>
+    </table>
+    M:
+    <select id="var_m_select_id">
+    </select>
+    <div class="variables" id="var_count_id" style="display: inline-block; padding-left: 5px; padding-right: 5px;">Count: <span class="variable-values">0</span></div>
+    <div class="variables" id="var_x_id" style="display: inline-block; padding-left: 5px; padding-right: 5px;">X: <span class="variable-values">0</span></div>
+    <button onclick="randomArray()">สุ่มค่าในรายการ</button>
+  </div>
+  
+  <p>
+    เขียนโปรแกรมหาค่าสูงที่สุดจากรายการ  ให้กำหนดค่าดังกล่าวให้กับตัวแปร Max
+  </p>
+  
   <p>
     <button onclick="showCode()">Show Code</button>
     <button onclick="runCode()">Run Code</button>
   </p>
-
+  
   <div style="float:right">
     โปรแกรมที่ทำงานขณะนี้<br />
     <pre id="codeDiv">
     </pre>
   </div>
   
-  <div id="blocklyDiv" style="height: 600px; width: 700px;"></div>
-
+  <div id="blocklyDiv" style="height: 500px; width: 900px;"></div>
+  
   <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
     <category name="Data">
       <block type="variables_set">
-        <field name="VAR" id="SWP)QJH*5EJ-+vB2h/[r" variabletype="">count</field>
+        <field name="VAR" id="SWP)QJH*5EJ-+vB2h/[r" variabletype="">Count</field>
       </block>
       <block type="math_change">
-        <field name="VAR" id="SWP)QJH*5EJ-+vB2h/[r" variabletype="">count</field>
+        <field name="VAR" id="SWP)QJH*5EJ-+vB2h/[r" variabletype="">Count</field>
         <value name="DELTA">
           <shadow type="math_number">
             <field name="NUM">1</field>
@@ -54,13 +91,13 @@
         </value>
       </block>
       <block type="variables_get">
-        <field name="VAR" id="SWP)QJH*5EJ-+vB2h/[r" variabletype="">count</field>
+        <field name="VAR" id="SWP)QJH*5EJ-+vB2h/[r" variabletype="">M</field>
       </block>
       <block type="variables_get">
-        <field name="VAR" id="TVB5~Gu!fnffI]%k=LER" variabletype="">M</field>
+        <field name="VAR" id="fdshghgiufdshgeisdfd" variabletype="">Count</field>
       </block>
       <block type="variables_get">
-        <field name="VAR" id="Ax5k=IUUUH;Zbi._^-i0" variabletype="">X</field>
+        <field name="VAR" id="TVB5~Gu!fnffI]%k=LER" variabletype="">X</field>
       </block>
       <block type="first_element"></block>
       <block type="ith_element"></block>
@@ -95,37 +132,176 @@
       <block type="math_number">
         <field name="NUM">1</field>
       </block>
+      <block type="math_number">
+        <field name="NUM">0</field>
+      </block>
     </category>
     <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
   </xml>
   
+
   <xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
     <variables>
-      <variable type="" id="eBcujxPkG9/`~]Y#e$`)">Max</variable>
-      <variable type="" id="ZPq6Ulk#?Z:9@n|5KY3V">X</variable>
+      <variable type="" id="fdslkfoi4hfljdflkdsjf">Count</variable>
+      <variable type="" id="xO|7zylrhOCeOEwyoLBD">M</variable>
+      <variable type="" id="x:@9Z,t2mQ2!tQjE~gQ;">X</variable>
     </variables>
-    <block type="variables_set" id="t?h$9O5cPLoooFFZV1EW" x="13" y="-12">
-      <field name="VAR" id="eBcujxPkG9/`~]Y#e$`)" variabletype="">Max</field>
+    <block type="variables_set" id="Kz9)6bB#;8KS(?S4L/$*" x="29" y="60">
+      <field name="VAR" id="xO|7zylrhOCeOEwyoLBD" variabletype="">Count</field>
     </block>
   </xml>
-  
+
   <script>
-   var workspace = Blockly.inject(
-     'blocklyDiv',
-     { media: '../media/',
-       toolbox: document.getElementById('toolbox'),
-       trashcan: true }
-   );
+    var inputArray = [];
+    
+    var workspace = Blockly.inject(
+      'blocklyDiv',
+      { media: '../media/',
+        toolbox: document.getElementById('toolbox'),
+        trashcan: true }
+    );
+    
+    var workspaceBlocks = document.getElementById("workspaceBlocks");
+    Blockly.Xml.domToWorkspace(workspace, workspaceBlocks);
 
-   var workspaceBlocks = document.getElementById("workspaceBlocks"); 
-   Blockly.Xml.domToWorkspace(workspace, workspaceBlocks);
+    function generateCode(forDisplay) {
+      if(forDisplay) {
+        Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+        MaxCustomBlock.ARRAY_VARIABLE_NAME = 'A';
+      } else {
+        Blockly.JavaScript.INFINITE_LOOP_TRAP =
+          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+        Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+        Blockly.JavaScript.addReservedWords('highlightBlock');
 
-   function showCode() {
-     // Generate JavaScript code and display it.
-     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-     var code = Blockly.JavaScript.workspaceToCode(workspace);
-     alert(code);
-   }
+        MaxCustomBlock.HIGHLIGHT_ARRAY_ACCESS = true;
+        MaxCustomBlock.HIGHLIGHT_VARIABLE_SET = true;
+        Blockly.JavaScript.addReservedWords('highlightArrayAccess');
+        Blockly.JavaScript.addReservedWords('highlightVariableSet');
+      }
+
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+
+      if(forDisplay) {
+        MaxCustomBlock.ARRAY_VARIABLE_NAME = 'myArray';
+      } else {
+        code = 'var myArray = [' + inputArray.join(',') + '];\n' +
+               code + '\n' +
+               'alert("โปรแกรมคืนค่า " + Count);\n';
+        
+        Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+        Blockly.JavaScript.STATEMENT_PREFIX = null;
+        MaxCustomBlock.HIGHLIGHT_ARRAY_ACCESS = false;
+        MaxCustomBlock.HIGHLIGHT_VARIABLE_SET = false;
+      }
+      return code;
+    }
+    
+    function showCode() {
+      var code = generateCode(true);
+      alert(code);
+    }
+
+    function highlightArrayAccess(idx) {
+      var tdid = '#array_val_' + idx.toString();
+      $(tdid).css('background-color','#77ff77');
+      window.setTimeout(function() {
+        $(tdid).css('background-color','');
+      }, 500);
+    }
+
+    function highlightVariableSet(varName, value) {
+      var vname = '';
+      if(varName == 'Max') {
+        vname = 'max';
+      } else if(varName == 'X') {
+        vname = 'x';
+      }
+      if(vname != '') {
+        $('#var_' + vname + '_id .variable-values').text(value.toString());
+        $('#var_' + vname + '_id').css('background-color','#ff7777');
+        window.setTimeout(function() {
+          $('#var_' + vname + '_id').css('background-color','');
+        }, 500);
+      }
+    }
+    
+    function initApi(interpreter, scope) {
+      var wrapper = function(text) {
+        text = text ? text.toString() : '';
+        return interpreter.createPrimitive(alert(text));
+      };
+      interpreter.setProperty(scope, 'alert',
+                              interpreter.createNativeFunction(wrapper));
+      
+      wrapper = function(text) {
+        text = text ? text.toString() : '';
+        return interpreter.createPrimitive(prompt(text));
+      };
+      interpreter.setProperty(scope, 'prompt',
+                              interpreter.createNativeFunction(wrapper));
+
+      wrapper = function(id) {
+        id = id ? id.toString() : '';
+        return interpreter.createPrimitive(workspace.highlightBlock(id));
+      };
+      interpreter.setProperty(scope, 'highlightBlock',
+                              interpreter.createNativeFunction(wrapper));
+
+      // highlightArrayAccess
+      wrapper = function(idx) {
+        console.log('Access array[' + idx + ']');
+      }
+      interpreter.setProperty(scope, 'highlightArrayAccess',
+                              interpreter.createNativeFunction(highlightArrayAccess));
+      // highlightVariableSet
+      wrapper = function(varName, value) {
+        console.log('Set ' + varName + ' = ' + value.toString());
+      }
+      interpreter.setProperty(scope, 'highlightVariableSet',
+                              interpreter.createNativeFunction(highlightVariableSet));
+    }
+
+    var interpreter = null;
+    
+    function nextStep() {
+      if (interpreter.step()) {
+        window.setTimeout(nextStep, 10);
+      }
+    }
+
+    function runCode() {
+      // Generate JavaScript code and run it.
+      window.LoopTrap = 1000;
+
+      var displayGeneratedCode = generateCode(true);
+      $("#codeDiv").text(displayGeneratedCode);
+
+      var generatedCode = generateCode(false);
+
+      interpreter = new Interpreter(generatedCode, initApi);
+      nextStep();
+    }
+
+    function randomArray() {
+      var arrayLen = 20;
+      for(var i = 0; i < arrayLen; i++) {
+        inputArray[i] = Math.floor(Math.random() * 100);
+        $('#array_val_' + i.toString()).text(inputArray[i]);
+      }
+    }
+
+    function generateMChoices() {
+      for(var i = 0; i <= 100; i++) {
+        var item = '<option value="' + i + '">' + i + '</option>';
+        $("#var_m_select_id").append(item);
+      }
+    }
+    
+    $(function(){
+      generateMChoices();
+      randomArray();
+    });
   </script>
 </body>
 </html>
