@@ -22,7 +22,7 @@
   </style>
 </head>
 <body>
-  <h1>นับจำนวนข้อมูลที่มีค่าน้อยกว่า M</h1>
+  <h1>นับจำนวนข้อมูลที่มีค่าไม่เกิน M</h1>
   <div style="float: right; border: 1px solid grey; padding: 5px;">
     <table border="1" style="border-collapse: collapse;">
       <tr>
@@ -61,7 +61,7 @@
   </div>
   
   <p>
-    เขียนโปรแกรมหาค่าสูงที่สุดจากรายการ  ให้กำหนดค่าดังกล่าวให้กับตัวแปร Max
+    เขียนโปรแกรมนับจำนวนข้อมูลที่มีค่าไม่เกิน M  ให้เก็บผลลัพธ์ในตัวแปร Count ในการทดลองโปรแกรมสามารถปรับค่า M ได้โดยเลือกค่าจากรายการด้านขวามือ
   </p>
   
   <p>
@@ -185,10 +185,12 @@
       if(forDisplay) {
         MaxCustomBlock.ARRAY_VARIABLE_NAME = 'myArray';
       } else {
+        var m = $("#var_m_select_id").val();
         code = 'var myArray = [' + inputArray.join(',') + '];\n' +
+               'var M = ' + m + ';\n' +
                code + '\n' +
                'alert("โปรแกรมคืนค่า " + Count);\n';
-        
+
         Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
         Blockly.JavaScript.STATEMENT_PREFIX = null;
         MaxCustomBlock.HIGHLIGHT_ARRAY_ACCESS = false;
@@ -212,8 +214,8 @@
 
     function highlightVariableSet(varName, value) {
       var vname = '';
-      if(varName == 'Max') {
-        vname = 'max';
+      if(varName == 'Count') {
+        vname = 'count';
       } else if(varName == 'X') {
         vname = 'x';
       }
@@ -296,6 +298,7 @@
         var item = '<option value="' + i + '">' + i + '</option>';
         $("#var_m_select_id").append(item);
       }
+      $("#var_m_select_id").val("50");
     }
     
     $(function(){
