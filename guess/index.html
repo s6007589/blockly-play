@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Blockly: Guess</title>
+  <script src="../js/blockly_compressed.js"></script>
+  <script src="../js/javascript_compressed.js"></script>
+  <script src="../js/blocks_compressed.js"></script>
+  <script src="../max/js/custom_blocks.js"></script>
+  <script src="../js/th.js"></script>
+  <script src="../js/jquery/jquery-3.2.1.min.js"></script>
+  <script src="../js/acorn_interpreter.js"></script>
+  <style>
+   body {
+       background-color: #fff;
+       font-family: sans-serif;
+   }
+   h1 {
+       font-weight: normal;
+       font-size: 140%;
+   }
+  </style>
+</head>
+<body>
+  <h1>เกมทายเลข</h1>
+  <div style="float: right; border: 1px solid grey; padding: 5px;">
+    <div class="variables" id="var_secret_id" style="display: inline-block; padding-left: 5px; padding-right: 5px;">secret: <span class="variable-values" style="display:none;">0</span><span id="secret_var_placeholder_id">(ซ่อน)</span></div>
+    <button id="secret_toggle_id">แสดงค่าตัวแปร secret</button>
+    <div class="variables" id="var_answer_id" style="display: inline-block; padding-left: 5px; padding-right: 5px;">answer: <span class="variable-values">0</span></div>
+  </div>
+  
+  <p>
+    เขียนโปรแกรมที่สุ่มจำนวนเต็มระหว่าง 1 - 100 มาเป็นคำตอบหนึ่งจำนวน และให้ผู้เล่นทายจำนวนที่เป็นคำตอบ จากนั้นจะให้คำใบ้ว่าจำนวนที่ทายมากกว่าหรือน้อยกว่าคำตอบ หรือตอบว่าเป็นคำตอบที่ถูกต้อง<br />
+    หมายเหตุ: ในการทำซ้ำแบบไม่รู้จบ ให้ใช้ block "Repeat while true"
+  </p>
+  
+  <p>
+    <button onclick="showCode()">Show Code</button>
+    <button onclick="runCode()">Run Code</button>
+  </p>
+  
+  <div style="float:right">
+    โปรแกรมที่ทำงานขณะนี้<br />
+    <pre id="codeDiv">
+    </pre>
+  </div>
+  
+  <div id="blocklyDiv" style="height: 600px; width: 800px;"></div>
+
+<xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
+  <category name="ทำซ้า">
+    <block type="controls_whileUntil">
+      <field name="MODE">WHILE</field>
+      <value name="BOOL">
+        <block type="logic_boolean">
+          <field name="BOOL">TRUE</field>
+        </block>
+      </value>
+    </block>
+    <block type="controls_flow_statements">
+      <field name="FLOW">BREAK</field>
+    </block>
+    <block type="controls_whileUntil">
+      <field name="MODE">WHILE</field>
+    </block>
+  </category>
+  <category name="เงื่อนไข">
+    <block type="controls_if"></block>
+    <block type="controls_if">
+      <mutation else="1"></mutation>
+    </block>
+    <block type="controls_if">
+      <mutation elseif="1" else="1"></mutation>
+    </block>
+    <block type="logic_compare">
+      <field name="OP">EQ</field>
+    </block>
+    <block type="logic_operation">
+      <field name="OP">AND</field>
+    </block>
+    <block type="logic_boolean">
+      <field name="BOOL">TRUE</field>
+    </block>
+    <block type="logic_negate"></block>
+  </category>
+  <category name="ข้อความ">
+    <block type="text">
+      <field name="TEXT"></field>
+    </block>
+    <block type="text_print">
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">ค่าน้อยเกินไป</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_print">
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">ค่ามากเกินไป</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_print">
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">ทายถูกต้อง</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_prompt_ext">
+      <mutation type="NUMBER"></mutation>
+      <field name="TYPE">NUMBER</field>
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">ทายเลข 1-100</field>
+        </shadow>
+      </value>
+    </block>
+  </category>
+  <category name="ข้อมูล">
+    <block type="math_random_int">
+      <value name="FROM">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="TO">
+        <shadow type="math_number">
+          <field name="NUM">100</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="variables_set">
+      <field name="VAR" id="6jz9j6:Xp|k=o6)ZFPt`" variabletype="">secret</field>
+    </block>
+    <block type="variables_set">
+      <field name="VAR" id="e1airM}avKMWlsim4Trw" variabletype="">answer</field>
+    </block>
+    <block type="variables_get">
+      <field name="VAR" id="e1airM}avKMWlsim4Trw" variabletype="">answer</field>
+    </block>
+    <block type="variables_get">
+      <field name="VAR" id="6jz9j6:Xp|k=o6)ZFPt`" variabletype="">secret</field>
+    </block>
+  </category>
+  <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
+</xml>
+
+<xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
+  <variables>
+    <variable type="" id="NhG9[(I[m]1cYUCTf,f,">secret</variable>
+    <variable type="" id="l_;onjNfK^FJ$Hcmdaxh">answer</variable>
+  </variables>
+  <block type="variables_set" id="5fw]@d?wExFEE)eK_Rjm" x="13" y="38">
+    <field name="VAR" id="NhG9[(I[m]1cYUCTf,f," variabletype="">secret</field>
+  </block>
+</xml>
+  
+  <script src="js/guess.js"></script>
+</body>
+</html>

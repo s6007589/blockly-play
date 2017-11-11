@@ -1,0 +1,9 @@
+<xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
+  <variables>
+    <variable type="" id="NhG9[(I[m]1cYUCTf,f,">secret</variable>
+    <variable type="" id="l_;onjNfK^FJ$Hcmdaxh">answer</variable>
+  </variables>
+  <block type="variables_set" id="5fw]@d?wExFEE)eK_Rjm" x="13" y="38">
+    <field name="VAR" id="NhG9[(I[m]1cYUCTf,f," variabletype="">secret</field>
+  </block>
+</xml>
