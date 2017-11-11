@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Blockly: Closest</title>
+  <script src="../js/blockly_compressed.js"></script>
+  <script src="../js/javascript_compressed.js"></script>
+  <script src="../js/blocks_compressed.js"></script>
+  <script src="../max/js/custom_blocks.js"></script>
+  <script src="../js/th.js"></script>
+  <script src="../js/jquery/jquery-3.2.1.min.js"></script>
+  <script src="../js/acorn_interpreter.js"></script>
+  <style>
+   body {
+       background-color: #fff;
+       font-family: sans-serif;
+   }
+   h1 {
+       font-weight: normal;
+       font-size: 140%;
+   }
+  </style>
+</head>
+<body>
+  <h1>หาจำนวนที่มีค่าใกล้เคียงกับ Target มากที่สุด</h1>
+  <div style="float: right; border: 1px solid grey; padding: 5px;">
+    <table border="1" style="border-collapse: collapse;">
+      <tr>
+        <td>ข้อมูลในรายการ</td>
+        <td id="array_val_0">10</td>
+        <td id="array_val_1">1</td>
+        <td id="array_val_2">9</td>
+        <td id="array_val_3">25</td>
+        <td id="array_val_4">30</td>
+        
+        <td id="array_val_5">15</td>
+        <td id="array_val_6">12</td>
+        <td id="array_val_7">14</td>
+        <td id="array_val_8">20</td>
+        <td id="array_val_9">25</td>
+        
+        <td id="array_val_10">30</td>
+        <td id="array_val_11">10</td>
+        <td id="array_val_12">10</td>
+        <td id="array_val_13">10</td>
+        <td id="array_val_14">10</td>
+
+        <td id="array_val_15">10</td>
+        <td id="array_val_16">10</td>
+        <td id="array_val_17">10</td>
+        <td id="array_val_18">10</td>
+        <td id="array_val_19">10</td>        
+      </tr>
+    </table>
+    Target:
+    <select id="var_target_select_id">
+    </select>
+    <div class="variables" id="var_x_id" style="display: inline-block; padding-left: 5px; padding-right: 5px;">X: <span class="variable-values">0</span></div>
+    <div class="variables" id="var_best_id" style="display: inline-block; padding-left: 5px; padding-right: 5px;">Best: <span class="variable-values">0</span></div>
+    <button onclick="randomArray()">สุ่มค่าในรายการ</button>
+    <div id="additional_vars_id">
+    </div>
+  </div>
+  
+  <p>
+    เขียนโปรแกรมหาข้อมูลในรายการที่มีค่าใกล้เคียงกับ Target มากที่สุด  ถ้ามีคำตอบหลายค่าให้ตอบค่าที่น้อยกว่า  ให้เก็บผลลัพธ์ในตัวแปร Best<br />
+    <small>ในการทดลองโปรแกรมสามารถปรับค่า Target ได้โดยเลือกค่าจากรายการด้านขวามือ นักเรียนสามารถสร้างตัวแปรไว้ใช้งานเพิ่มได้โดยเลือกจากชุดกล่อง Variables นอกจากนี้ในการคำนวณสามารถใช้ฟังก์ชันหาค่าสัมบูรณ์ได้</small>
+  </p>
+  
+  <p>
+    <button onclick="showCode()">Show Code</button>
+    <button onclick="runCode()">Run Code</button>
+  </p>
+  
+  <div style="float:right">
+    โปรแกรมที่ทำงานขณะนี้<br />
+    <pre id="codeDiv">
+    </pre>
+  </div>
+  
+  <div id="blocklyDiv" style="height: 500px; width: 900px;"></div>
+  
+  <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
+    <category name="Data">
+      <block type="first_element"></block>
+      <block type="ith_element"></block>
+      <block type="array_loop">
+        <field name="loopvar" id="TVB5~Gu!fnffI]%k=LER" variabletype="">X</field>
+      </block>
+      <block type="array_loop_skip_first">
+        <field name="loopvar" id="TVB5~Gu!fnffI]%k=LER" variabletype="">X</field>
+      </block>
+    </category>
+    <category name="Conditions">
+      <block type="controls_if"></block>
+      <block type="controls_if">
+        <mutation else="1"></mutation>
+      </block>
+      <block type="logic_compare">
+        <field name="OP">EQ</field>
+      </block>
+      <block type="logic_operation">
+        <field name="OP">AND</field>
+      </block>
+    </category>
+    <category name="Math">
+      <block type="math_single">
+        <field name="OP">ABS</field>
+      </block>
+      <block type="math_arithmetic">
+        <field name="OP">ADD</field>
+        <value name="B">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="math_number">
+        <field name="NUM">1</field>
+      </block>
+      <block type="math_number">
+        <field name="NUM">0</field>
+      </block>
+    </category>
+    <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
+  </xml>
+  
+
+  <xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
+    <variables>
+      <variable type="" id="fdslkfoi4hfljdflkdsj">Target</variable>
+      <variable type="" id="xO|7zylrhOCeOEwyoLBD">Best</variable>
+      <variable type="" id="x:@9Z,t2mQ2!tQjE~gQ;">X</variable>
+    </variables>
+    <block type="variables_set" id="Kz9)6bB#;8KS(?S4L/$*" x="29" y="60">
+      <field name="VAR" id="xO|7zylrhOCeOEwyoLBD" variabletype="">Best</field>
+    </block>
+  </xml>
+
+  <script src="js/closest.js"></script>
+</body>
+</html>
