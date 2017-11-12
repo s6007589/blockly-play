@@ -101,7 +101,11 @@ Blockly.JavaScript['first_element'] = function(block) {
 
 Blockly.JavaScript['ith_element'] = function(block) {
   var value_index = Blockly.JavaScript.valueToCode(block, 'INDEX', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = MaxCustomBlock.ARRAY_VARIABLE_NAME + '[' + value_index + ']';
+
+  if(!MaxCustomBlock.HIGHLIGHT_ARRAY_ACCESS) {
+    var code = MaxCustomBlock.ARRAY_VARIABLE_NAME + '[' + value_index + ']';
+  } else {
+    var code = '(highlightArrayAccess((' + value_index + ')) ? ' + MaxCustomBlock.ARRAY_VARIABLE_NAME + '[' + value_index + '] : 0 )';  }
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
