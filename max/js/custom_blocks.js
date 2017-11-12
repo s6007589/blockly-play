@@ -1,6 +1,7 @@
 var blockTypes = [
   "first_element",
   "ith_element",
+  "num_elements",
   "array_loop",
   "array_loop_skip_first"
 ];
@@ -26,6 +27,14 @@ var blockDescriptions = [{
     }
   ],
   "inputsInline": true,
+  "output": "Number",
+  "colour": 0,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "message0": "จำนวนข้อมูลในรายการ",
+  "inputsInline": false,
   "output": "Number",
   "colour": 0,
   "tooltip": "",
@@ -99,13 +108,18 @@ Blockly.JavaScript['first_element'] = function(block) {
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
+Blockly.JavaScript['num_elements'] = function(block) {
+  var code = MaxCustomBlock.ARRAY_VARIABLE_NAME + '.length';
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
 Blockly.JavaScript['ith_element'] = function(block) {
   var value_index = Blockly.JavaScript.valueToCode(block, 'INDEX', Blockly.JavaScript.ORDER_ATOMIC);
 
   if(!MaxCustomBlock.HIGHLIGHT_ARRAY_ACCESS) {
-    var code = MaxCustomBlock.ARRAY_VARIABLE_NAME + '[' + value_index + ']';
+    var code = MaxCustomBlock.ARRAY_VARIABLE_NAME + '[(' + value_index + ')-1]';
   } else {
-    var code = '(highlightArrayAccess((' + value_index + ')) ? ' + MaxCustomBlock.ARRAY_VARIABLE_NAME + '[' + value_index + '] : 0 )';  }
+    var code = '(highlightArrayAccess((' + value_index + ') - 1) ? ' + MaxCustomBlock.ARRAY_VARIABLE_NAME + '[(' + value_index + ') - 1] : 0 )';  }
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 

@@ -34,8 +34,7 @@ function generateCode(forDisplay) {
     var target = $("#var_target_select_id").val();
     code = 'var myArray = [' + inputArray.join(',') + '];\n' +
            'var Target = ' + target + ';\n' +
-           code + '\n' +
-           'alert("โปรแกรมคืนค่า " + Best);\n';
+           code + '\n';
 
     Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
     Blockly.JavaScript.STATEMENT_PREFIX = null;
@@ -149,8 +148,16 @@ function compareNumbers(a, b) {
 
 function randomArray() {
   var arrayLen = 200;
+  var used = {};
   for(var i = 0; i < arrayLen; i++) {
-    inputArray[i] = Math.floor(Math.random() * 500);
+    var x = Math.floor(Math.random() * 500);
+    var k = 'x' + x;
+    while(used[k]) {
+      x = Math.floor(Math.random() * 500);
+      k = 'x' + x;
+    }
+    inputArray[i] = x;
+    used[k] = true;
   }
   inputArray.sort(compareNumbers);
   for(var i = 0; i < arrayLen; i++) {
