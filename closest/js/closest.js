@@ -154,6 +154,11 @@ function generateTargetChoices() {
   $("#var_target_select_id").val("50");
 }
 
+function hideHint() {
+  $('#hint').slideToggle();
+  return false;
+}
+
 $(function(){
   generateTargetChoices();
   randomArray();

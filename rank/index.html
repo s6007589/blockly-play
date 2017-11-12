@@ -7,6 +7,7 @@
   <script src="../js/javascript_compressed.js"></script>
   <script src="../js/blocks_compressed.js"></script>
   <script src="../max/js/custom_blocks.js"></script>
+  <script src="js/custom_blocks.js"></script>
   <script src="../js/th.js"></script>
   <script src="../js/jquery/jquery-3.2.1.min.js"></script>
   <script src="../js/acorn_interpreter.js"></script>
@@ -24,7 +25,7 @@
 <body>
   <h1>หาอันดับจากการร้องเพลง</h1>
   <div style="float: right; border: 1px solid grey; padding: 5px;">
-    <div style="height: 80px; overflow-y: auto; margin-bottom: 2px; border: 1px solid #c0c0c0; padding: 1px;">
+    <div id="array_table_container_id" style="height: 80px; overflow-y: auto; margin-bottom: 2px; border: 1px solid #c0c0c0; padding: 1px;">
       <table id="array_table_id" border="1" style="border-collapse: collapse;">
         <tr id="row_0">
           <td rowspan="10" style="vertical-align: top;">ข้อมูลในรายการ</td>
@@ -51,8 +52,8 @@
   </div>
   
   <p>
-    เขียนโปรแกรมหาข้อมูลในรายการที่มีค่าใกล้เคียงกับ Target มากที่สุด  ถ้ามีคำตอบหลายค่าให้ตอบค่าที่น้อยกว่า  ให้เก็บผลลัพธ์ในตัวแปร Best<br />
-    <small>ในการทดลองโปรแกรมสามารถปรับค่า Target ได้โดยเลือกค่าจากรายการด้านขวามือ นักเรียนสามารถสร้างตัวแปรไว้ใช้งานเพิ่มได้โดยเลือกจากชุดกล่อง Variables นอกจากนี้ในการคำนวณสามารถใช้ฟังก์ชันหาค่าสัมบูรณ์ได้</small>
+    เขียนโปรแกรมหาตำแหน่งของข้อมูลในรายการที่มีค่าเท่ากับคะแนนของเพื่อน (Target) ให้ตอบโดยการพิมพ์ว่าเพื่อนได้อันอับที่เท่าใด  ในการใช้ค่าคะแนนของเพื่อนในโปรแกรมสามารถเรียกผ่านทางกล่อง "คะแนนของเพื่อน" หรือผ่านทางตัวแปร Target ก็ได้<br />
+    <small>ในการทดลองโปรแกรมสามารถปรับคะแนนของเพื่อน (Target) ได้โดยเลือกค่าจากรายการด้านขวามือ นักเรียนสามารถสร้างตัวแปรไว้ใช้งานเพิ่มได้โดยเลือกจากชุดกล่อง Variables</small>
   </p>
   
   <p>
@@ -71,8 +72,15 @@
   
   <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
     <category name="Data">
+      <block type="target_value"></block>
       <block type="first_element"></block>
-      <block type="ith_element"></block>
+      <block type="ith_element">
+        <value name="INDEX">
+          <shadow type="variables_get">
+            <field name="VAR" id="=UP}qqOB,LrqC~]l9A[w" variabletype="">i</field>
+          </shadow>
+        </value>
+      </block>
       <block type="num_elements"></block>
       <block type="controls_for">
         <field name="VAR" id="=UP}qqOB,LrqC~]l9A[w" variabletype="">i</field>
@@ -153,14 +161,11 @@
 
   <xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
     <variables>
-      <variable type="" id="fdslkfoi4hfljdflkdsj">Target</variable>
+      <variable type="" id="x:@9fdslhfldskfjldsk">Y</variable>
+      <variable type="" id="4g4h3lkhs9fh43iuffds">i</variable>
       <variable type="" id="x:@9Z,t2mQ2!tQjE~gQ;">X</variable>
       <variable type="" id="fdkfkjdshfkdslfkdsjh">L</variable>
-      <variable type="" id="xO|7zylrhOCeOEwyoLBD">Best</variable>
     </variables>
-    <block type="variables_set" id="Kz9)6bB#;8KS(?S4L/$*" x="29" y="60">
-      <field name="VAR" id="xO|7zylrhOCeOEwyoLBD" variabletype="">Best</field>
-    </block>
   </xml>
 
   <script src="js/rank.js"></script>

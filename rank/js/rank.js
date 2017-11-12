@@ -51,6 +51,8 @@ function showCode() {
 
 function highlightArrayAccess(idx) {
   var tdid = '#array_val_' + idx.toString();
+  var relTop = $(tdid).position().top - $('#array_table_id').position().top;
+  $('#array_table_container_id').scrollTop(relTop);
   $(tdid).css('background-color','#77ff77');
   window.setTimeout(function() {
     $(tdid).css('background-color','');
@@ -117,7 +119,7 @@ var stopInterpreter = null;
 function nextStep() {
   if (interpreter.step()) {
     if(!stopInterpreter) {
-      window.setTimeout(nextStep, 2);
+      window.setTimeout(nextStep, 1);
     } else {
       stopInterpreter = null;
     }
@@ -178,7 +180,7 @@ function generateTargetChoices() {
     var item = '<option value="' + inputArray[i] + '">' + inputArray[i] + '</option>';
     $("#var_target_select_id").append(item);
   }
-  $("#var_target_select_id").val(inputArray[100]);
+  $("#var_target_select_id").val(inputArray[30]);
 }
 
 $(function(){
