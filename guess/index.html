@@ -28,23 +28,23 @@
     <button id="secret_toggle_id">แสดงค่าตัวแปร secret</button>
     <div class="variables" id="var_answer_id" style="display: inline-block; padding-left: 5px; padding-right: 5px;">answer: <span class="variable-values">0</span></div>
   </div>
-  
+
   <p>
     เขียนโปรแกรมที่สุ่มจำนวนเต็มระหว่าง 1 - 100 มาเป็นคำตอบหนึ่งจำนวน และให้ผู้เล่นทายจำนวนที่เป็นคำตอบ จากนั้นจะให้คำใบ้ว่าจำนวนที่ทายมากกว่าหรือน้อยกว่าคำตอบ หรือตอบว่าเป็นคำตอบที่ถูกต้อง<br />
     หมายเหตุ: ในการทำซ้ำแบบไม่รู้จบ ให้ใช้ block "Repeat while true"
   </p>
-  
+
   <p>
     <button onclick="showCode()">Show Code</button>
     <button onclick="runCode()">Run Code</button>
   </p>
-  
+
   <div style="float:right">
     โปรแกรมที่ทำงานขณะนี้<br />
     <pre id="codeDiv">
     </pre>
   </div>
-  
+
   <div id="blocklyDiv" style="height: 600px; width: 800px;"></div>
 
 <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
@@ -144,7 +144,7 @@
       <field name="VAR" id="6jz9j6:Xp|k=o6)ZFPt`" variabletype="">secret</field>
     </block>
   </category>
-  <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
+  <!-- <category name="Variables" colour="#A65C81" custom="VARIABLE"></category> -->
 </xml>
 
 <xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
@@ -156,7 +156,7 @@
     <field name="VAR" id="NhG9[(I[m]1cYUCTf,f," variabletype="">secret</field>
   </block>
 </xml>
-  
+
   <script src="js/guess.js"></script>
 </body>
 </html>

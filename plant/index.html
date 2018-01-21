@@ -23,11 +23,11 @@
 <body>
   <h1>รดน้ำต้นไม้</h1>
   <p>
-    เขียนโปรแกรมอ่านค่าระดับความชื้นเพื่อควบคุมระบบรดน้ำต้นไม้  โปรแกรมดังกล่าวจะถูกเรียกให้ทำงานซ้ำๆ กันทุก ๆ หนึ่งวินาที  สามารถทดลองให้ทำงานกับระดับความร้อนของแดดแบบต่าง ๆ ได้  ระดับความชื้นที่อ่านได้มีค่าระหว่าง 0 - 100 หน่วย ระดับความชื้นที่เหมาะสมคือ 40 - 60 หน่วย 
+    เขียนโปรแกรมอ่านค่าระดับความชื้นเพื่อควบคุมระบบรดน้ำต้นไม้  โปรแกรมดังกล่าวจะถูกเรียกให้ทำงานซ้ำๆ กันทุก ๆ หนึ่งวินาที  สามารถทดลองให้ทำงานกับระดับความร้อนของแดดแบบต่าง ๆ ได้  ระดับความชื้นที่อ่านได้มีค่าระหว่าง 0 - 100 หน่วย ระดับความชื้นที่เหมาะสมคือ 40 - 60 หน่วย
   </p>
 
   <p>
-    ปรับระดับความร้อนของแสงแดด <input id="height_input_id" type="range" min="0" max="100" /> 
+    ปรับระดับความร้อนของแสงแดด <input id="height_input_id" type="range" min="0" max="100" />
     ระดับความร้อน: <span id="height_id"></span> หน่วย
     <button onclick="showCode()">Show Code</button>
     <button onclick="runCode()">Run Code</button>
@@ -58,9 +58,9 @@
     <pre id="codeDiv">
     </pre>
   </div>
-  
+
   <div id="blocklyDiv" style="height: 440px; width: 700px; margin-left: 165px;"></div>
-  
+
   <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
     <category name="เงื่อนไข">
       <block type="controls_if">
@@ -75,17 +75,17 @@
       </block>
     </category>
     <category name="อ่านและควบคุม">
-      <block type="variables_set">
+      <!-- <block type="variables_set">
         <field name="VAR" id=";*}x{Gzx8H!,@OPcXJ+s" variabletype="">H</field>
       </block>
       <block type="variables_get">
         <field name="VAR" id=";*}x{Gzx8H!,@OPcXJ+s" variabletype="">H</field>
-      </block>
+      </block> -->
       <block type="get_water_level"></block>
       <block type="signal_water_on"></block>
       <block type="signal_water_off"></block>
     </category>
-    <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
+    <category name="ตัวแปร" colour="#A65C81" custom="VARIABLE"></category>
   </xml>
 
   <xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
@@ -99,7 +99,7 @@
       </value>
     </block>
   </xml>
-  
+
   <script>
    var workspace = Blockly.inject(
      'blocklyDiv',
@@ -108,7 +108,7 @@
        trashcan: true }
    );
 
-   var workspaceBlocks = document.getElementById("workspaceBlocks"); 
+   var workspaceBlocks = document.getElementById("workspaceBlocks");
    Blockly.Xml.domToWorkspace(workspace, workspaceBlocks);
 
    var simulationTimeInterval = 1500;
@@ -116,21 +116,21 @@
    var isWaterOn = false;
    var generatedCode = '';
    var waterLevel = 50;
-   
+
    function showWaterLevel() {
      $("#waterLevelTextId").text(waterLevel + "%");
      $("#waterLevelId").attr("fill-opacity", 0.1 + waterLevel*(0.009));
    }
-   
+
    function getWaterLevel() {
      return waterLevel;
    }
-   
+
    function signalWaterOn() {
      isWaterOn = true;
      $("#dropId").attr('stroke', 'blue').attr('fill','blue');
    }
-   
+
    function signalWaterOff() {
      isWaterOn = false;
      $("#dropId").attr('stroke', 'black').attr('fill','gray');
@@ -145,7 +145,7 @@
      }
      showWaterLevel();
    }
-   
+
    function gameLoop() {
      applySun();
      try {
@@ -171,16 +171,16 @@
        }, 50);
      }
    }
-   
+
    function showCode() {
      // Generate JavaScript code and display it.
      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
      var code = Blockly.JavaScript.workspaceToCode(workspace);
      alert(code);
    }
-   
+
    var intervalId = null;
-   
+
    function runCode() {
      // Generate JavaScript code and run it.
      window.LoopTrap = 1000;
@@ -192,17 +192,17 @@
        window.clearInterval(intervalId);
      }
      intervalId = window.setInterval(gameLoop, simulationTimeInterval);
-     
+
      $("#codeDiv").text(generatedCode);
    }
-   
+
    var updateSunLevel = function() {
      var h = $("#height_input_id").val();
      $("#height_id").text(h);
      $("#sunLevelId").attr("fill-opacity",0.25 + parseInt(h)*(0.005));
      $("#sunLevelId").attr("stroke-width",1 + parseInt(h)*(0.02));
    };
-   
+
    $(function(){
      $('input[type=range]').on('input', function () {
        $(this).trigger('change');
@@ -211,7 +211,7 @@
      $("#height_input_id").change(function(){
        updateSunLevel();
      });
-     
+
      showWaterLevel();
    });
   </script>

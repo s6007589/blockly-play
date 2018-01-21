@@ -32,13 +32,13 @@
         <td id="array_val_2">9</td>
         <td id="array_val_3">25</td>
         <td id="array_val_4">30</td>
-        
+
         <td id="array_val_5">15</td>
         <td id="array_val_6">12</td>
         <td id="array_val_7">14</td>
         <td id="array_val_8">20</td>
         <td id="array_val_9">25</td>
-        
+
         <td id="array_val_10">30</td>
         <td id="array_val_11">10</td>
         <td id="array_val_12">10</td>
@@ -49,34 +49,34 @@
         <td id="array_val_16">10</td>
         <td id="array_val_17">10</td>
         <td id="array_val_18">10</td>
-        <td id="array_val_19">10</td>        
+        <td id="array_val_19">10</td>
       </tr>
     </table>
     <div class="variables" id="var_min_id" style="display: inline-block; padding-left: 5px; padding-right: 5px;">Min: <span class="variable-values">0</span></div>
     <div class="variables" id="var_x_id" style="display: inline-block; padding-left: 5px; padding-right: 5px;">X: <span class="variable-values">0</span></div>
     <button onclick="randomArray()">สุ่มค่าในรายการ</button>
   </div>
-  
+
   <p>
     เขียนโปรแกรมหาค่าต่ำที่สุดจากรายการ  ให้กำหนดค่าดังกล่าวให้กับตัวแปร Min
   </p>
-  
+
   <p>
     <button onclick="showCode()">Show Code</button>
     <button onclick="runCode()">Run Code</button>
   </p>
-  
+
   <div style="float:right">
     โปรแกรมที่ทำงานขณะนี้<br />
     <pre id="codeDiv">
     </pre>
   </div>
-  
+
   <div id="blocklyDiv" style="height: 500px; width: 800px;"></div>
-  
+
   <xml xmlns="http://www.w3.org/1999/xhtml" id="toolbox" style="display: none;">
     <category name="Data">
-      <block type="variables_set">
+      <!-- <block type="variables_set">
         <field name="VAR" id="SWP)QJH*5EJ-+vB2h/[r" variabletype="">Min</field>
       </block>
       <block type="math_change">
@@ -86,13 +86,15 @@
             <field name="NUM">1</field>
           </shadow>
         </value>
-      </block>
+      </block> -->
+      <!--
       <block type="variables_get">
         <field name="VAR" id="SWP)QJH*5EJ-+vB2h/[r" variabletype="">Min</field>
       </block>
       <block type="variables_get">
         <field name="VAR" id="TVB5~Gu!fnffI]%k=LER" variabletype="">x</field>
       </block>
+    -->
       <block type="first_element"></block>
       <block type="ith_element"></block>
       <block type="array_loop">
@@ -129,7 +131,7 @@
     </category>
     <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
   </xml>
-  
+
 
   <xml xmlns="http://www.w3.org/1999/xhtml" id="workspaceBlocks" style="display:none">
     <variables>
